@@ -15,7 +15,7 @@ const showMenu = () => {
     setMenu(!menu)
 }
 
-const {user} = useContext(UserContext)
+const {user} = useContext(UserContext) || {}
 
 
 
@@ -60,4 +60,4 @@ const {user} = useContext(UserContext)
     )
 }
 
-export default Navbar
+export default Navbar;
