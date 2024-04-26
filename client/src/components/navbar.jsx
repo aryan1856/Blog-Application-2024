@@ -60,4 +60,4 @@ const {user} = useContext(UserContext)
     )
 }
 
-export default Navbar
+export default Navbar;
