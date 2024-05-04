@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from 'react';
+import {React, useContext, useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import Comment from '../components/comment';
 import Footer from '../components/footer';
@@ -10,7 +10,7 @@ import { URL, IF } from '../url';
 import { UserContext } from '../context/UserContext';
 import Loader from '../components/loader';
 
-function PostDetails() {
+const PostDetails = () => {
   const PostID = useParams().id;
 
   const [post, setpost] = useState({});
@@ -22,7 +22,7 @@ function PostDetails() {
 
   const fetchPost = async () => {
     try {
-      const res = await axios.get("/api/post/" + PostID);
+      const res = await axios.get("/api/posts/" + PostID);
       setpost(res.data);
     } catch (err) {
       console.log(err);
@@ -50,26 +50,27 @@ function PostDetails() {
       setcomments(res.data);
       setloader(false);
     } catch (err) {
-      setloader(false);
+      setloader(true);
       console.log(err);
     }
   };
 
   useEffect(() => {
-    fetchPostComments();
+    fetchPostComments()
   }, [PostID]);
 
   const postComment = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post(URL + "/api/comments/create/", {
-        Comment: comment,
+      const res = await axios.post(URL + "/api/comments/create", {
+        comment: comment,
         author: user.username,
         postId: PostID,
-        userID: user._id
+        userId: user._id
       }, { withCredentials: true });
-      setComment('');
-      fetchPostComments(); // Update comments without reloading the page
+      // setComment('');
+      // fetchPostComments(); // Update comments without reloading the page
+      window.location.reload(true)
     } catch (err) {
       console.log(err);
     }
@@ -86,9 +87,7 @@ function PostDetails() {
         <div className='px-8 md:px-[200px] mt-8'>
           <div className='border p-3 shadow'>
             <div className='flex justify-between items-center'>
-              <h1 className='text-3xl font-bold text-black md:text-3xl'>
-                {post.title}
-              </h1>
+            <h1 className="text-3xl font-bold text-black md:text-3xl">{post.title}</h1>
               {user?._id === post?.userId && (
                 <div className='flex items-center justify-center space-x-2 '>
                   <p className='cursor-pointer ' onClick={() => navigate("/edit/" + PostID)}>

@@ -8,9 +8,9 @@ import PostDetails from './pages/post-details.jsx'
 import EditPost from './pages/edit-post.jsx'
 import MyBlogs from './pages/MyBlogs.jsx'
 import Profile from './pages/profile.jsx'
-import UserContextProvider from './context/UserContext.jsx';
+import {UserContextProvider} from './context/UserContext.jsx';
 
-function App() {
+const App  = () => {
   return (
     <UserContextProvider>
       
@@ -19,7 +19,7 @@ function App() {
         <Route exact path='/login' element={<Login/>}/>
         <Route exact path='/register' element={<Register/>}/>
         <Route exact path='/write' element={<CreatePost/>}/>
-        <Route exact path='/Posts/post/:id' element={<PostDetails/>}/>
+        <Route exact path='/posts/post/:id' element={<PostDetails/>}/>
         <Route exact path='/edit/:id' element={<EditPost/>}/>
         <Route exact path='/myblogs/:id' element={<MyBlogs/>}/>
         <Route exact path='/profile/:id' element={<Profile/>}/>

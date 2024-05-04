@@ -6,7 +6,9 @@ import {ImCross} from 'react-icons/im'
 import axios from 'axios';
 import { useNavigate,useParams } from 'react-router-dom';
 import { UserContext } from '../context/UserContext';
-function EditPost() {
+import {URL} from '../url'
+
+const EditPost = () => {
   const postId = useParams().id
   const {user} = useContext(UserContext)
   const navigate = useNavigate()
@@ -35,6 +37,7 @@ function EditPost() {
 
 
   const handleUpdate = async (e) =>{
+    e.preventDefault()
    const post={
     title,
     desc,
@@ -98,7 +101,7 @@ const deleteCategory = (i) =>{
           <form className='w-full flex flex-col space-y-4 md:space-y-8 mt-4'>
             <input type='text' onChange={(e) => setTitle(e.target.value)} value={title} placeholder='Enter post Title' className='px-4 py-2 outline-none'/>
             
-            <input type='file' onChange={(e)=> setFile(e.target.files[0])} value={file} className='px-4' />
+            <input type='file' onChange={(e)=> setFile(e.target.files[0])} className='px-4' />
             <div className='flex flex-col'>
              <div className='flex items-center space-x-4 md:space-x-8'>
                      <input type="text" value={cat} onChange={(e)=> setCat(e.target.value)} placeholder='Enter post categories' className=" px-4 pt-2 outline-none" />
@@ -123,7 +126,7 @@ const deleteCategory = (i) =>{
 
        </textarea>
         <button onClick={handleUpdate} className='bg-black w-full md:w-[20%] mx-auto text-white font-semibold px-4 py-2 md:text-xl text-lg'>
-         Create blog
+         Update Post
                 </button>
 
           </form>
