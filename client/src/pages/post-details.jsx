@@ -40,7 +40,7 @@ const PostDetails = () => {
   };
 
   const confirmDelete = () => {
-    if(window.confirm("Are your sure you want t0 delete post?"))
+    if(window.confirm("Are you sure you want to delete post?"))
         handleDeletePost()
   }
 

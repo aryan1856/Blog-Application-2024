@@ -11,8 +11,9 @@ function Profile() {
   const { user, setUser } = useContext(UserContext);
   const navigate = useNavigate();
 
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState(user?.username || "");
+const [email, setEmail] = useState(user?.email || "");
+
   const [newPassword, setNewPassword] = useState("");
   const [editMode, setEditMode] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -20,19 +21,23 @@ function Profile() {
   const [updated, setUpdated] = useState(false);
 
   useEffect(() => {
-    const fetchProfile = async () => {
-      try {
-        const res = await axios.get(`${URL}/api/users/${user._id}`);
-        setUsername(res.data.username);
-        setEmail(res.data.email);
-      } catch (err) {
-        console.error(err);
-        setError("Failed to fetch data");
-      }
-    };
-
-    fetchProfile();
-  }, [user._id]);
+    if (!user) {
+      navigate("/login"); // Redirect if user is undefined
+    } else if (user._id) {
+      const fetchProfile = async () => {
+        try {
+          const res = await axios.get(`${URL}/api/users/${user._id}`);
+          setUsername(res.data.username);
+          setEmail(res.data.email);
+        } catch (err) {
+          console.error(err);
+          setError("Failed to fetch data");
+        }
+      };
+      fetchProfile();
+    }
+  }, [user, navigate]);
+  
 
   const handleUserUpdate = async () => {
     setLoading(true);

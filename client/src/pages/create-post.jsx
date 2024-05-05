@@ -67,6 +67,13 @@ const CreatePost = () => {
         }
     };
 
+    const ProtectedRoute = ({children}) =>{
+        const {isLoggedIn} = UserContext();
+        if(!isLoggedIn)
+            return navigate("/login");
+        return children;
+    }
+
     return (
         <div>
             <Navbar />

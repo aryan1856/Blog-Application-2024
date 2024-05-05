@@ -24,6 +24,7 @@ const App = () => {
           <Route exact path='/posts/category/:category' element={<CategoryBlogs/>}/>
           <Route exact path='/myblogs/:id' element={<MyBlogs />} />
           <Route exact path='/profile/:id' element={<Profile />} />
+
         </Routes>
     </UserContextProvider>
   );
