@@ -9,6 +9,7 @@ const verifyToken = require('../verifyToken')
 //create
 router.post("/create", verifyToken, async(request, response) => {
     try {
+        console.log(request.body.category)
         const newPost = new post(request.body)
         const savedPost = await newPost.save()
         response.status(200).json(savedPost)
@@ -48,22 +49,38 @@ router.get("/:id", async(request, response) => {
     }
 })
 
-router.get("/", async(request, response) => {
-    const query = request.query;
+router.get("/", async (request, response) => {
+    const { search, category } = request.query;
     try {
-        const searchFilter = {
-            title:{$regex:query.search, $options:"i"}
+        const searchConditions = {};
+        
+        if (search) {
+            searchConditions.title = { $regex: search, $options: "i" };
         }
-        const posts = await post.find(query.search ? searchFilter:null)
+        
+        if (category) {
+            searchConditions.category = category;
+        }
+        
+        const posts = await post.find(searchConditions);
+        response.status(200).json(posts);
+    } catch (error) {
+        response.status(500).json(error);
+    }
+});
+
+router.get("/user/:userId", async(request, response) => {
+    try {
+        const posts = await post.find({userId:request.params.userId})
         response.status(200).json(posts)
     } catch (error) {
         response.status(500).json(error)
     }
 })
 
-router.get("/user/:userId", async(request, response) => {
+router.get("/category/:category", async(request, response) => {
     try {
-        const posts = await post.find({userId:request.params.userId})
+        const posts = await post.find({category:request.params.category})
         response.status(200).json(posts)
     } catch (error) {
         response.status(500).json(error)

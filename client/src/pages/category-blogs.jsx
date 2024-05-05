@@ -1,5 +1,5 @@
 import React from 'react'
-import {Link,useLocation} from 'react-router-dom'
+import {Link,useLocation, useParams} from 'react-router-dom'
 import Footer from '../components/footer';
 import Navbar from '../components/navbar';
 import { UserContext } from '../context/UserContext';
@@ -13,20 +13,21 @@ import Loader from '../components/loader'
 
 
 
-function MyBlogs() {
+function CategoryBlogs() {
 
   const {search} = useLocation()
   const [posts,setposts] = useState([])
   const [noResults,setNoResults] = useState(false)
   const [loader,setloader] = useState(false);
   const {user} = useContext(UserContext)
+  const {category} = useParams()
 
 
 
   const fetchposts = async()=>{
     setloader(true)
     try{
-       const res = await axios.get(URL + "/api/posts/user/" + user._id)
+       const res = await axios.get(URL + "/api/posts/category/" + category)
        setposts(res.data)
        if(res.data.length === 0){
         setNoResults(true)
@@ -49,7 +50,7 @@ function MyBlogs() {
  useEffect(()=>{
   fetchposts();
 
- },[search])
+ },[category])
 
 
  return (
@@ -82,4 +83,4 @@ function MyBlogs() {
 );
 
 }
-export default MyBlogs;
+export default CategoryBlogs;

@@ -39,6 +39,11 @@ const PostDetails = () => {
     }
   };
 
+  const confirmDelete = () => {
+    if(window.confirm("Are your sure you want t0 delete post?"))
+        handleDeletePost()
+  }
+
   useEffect(() => {
     fetchPost();
   }, [PostID]);
@@ -93,7 +98,7 @@ const PostDetails = () => {
                   <p className='cursor-pointer ' onClick={() => navigate("/edit/" + PostID)}>
                     <BiEdit />
                   </p>
-                  <p className='cursor-pointer ' onClick={handleDeletePost}>
+                  <p className='cursor-pointer ' onClick={confirmDelete}>
                     <MdDelete />
                   </p>
                 </div>
@@ -101,11 +106,11 @@ const PostDetails = () => {
             </div>
             <div className='w-[100%] flex flex-col'>
               <img src={IF + post.photo} className='object-cover h-[45vh] mx-auto mt-8' alt='' />
-              <p className='mx-auto mt-8 w-[80vh] border p-5 shadow-x1'>{post.desc}</p>
+              <p className='text-justify mt-4 px-2 md:px-4 lg:px-8 w-full border p-3 shadow-sm'>{post.desc}</p>
               <div className='flex justify-center items-center mt-8 space-x-4 font-semibold'>
                 <p>Categories: </p>
                 <div className='flex justify-center items-center space-x-2'>
-                  {post.categories?.map((c, i) => (
+                  {post.category?.map((c, i) => (
                     <div key={i} className='bg-gray-300 rounded-xl px-3 py-1'>
                       {c}
                     </div>
@@ -113,11 +118,11 @@ const PostDetails = () => {
                 </div>
               </div>
               <div className='flex justify-center items-center p-3 flex-col mt-4'></div>
-              <h3 className='flex justify-center items-center mt-8 space-x-4 font-semibold'>
+              <h3 className='items-center mt-8 space-x-4 font-semibold'>
                 Comments:
               </h3>
               {comments?.map((c) => (
-                <Comment className="" key={c._id} c={c} post={post} />
+                <Comment className='' key={c._id} c={c} post={post} />
               ))}
               <div className='border flex justify-center flex-col mt-4 md:flex-row'>
                 <input onChange={(e) => setComment(e.target.value)} type='text'

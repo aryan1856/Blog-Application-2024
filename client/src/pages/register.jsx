@@ -38,8 +38,8 @@ function Register() {
           <Link to="/login">Login</Link>
         </h3>
       </div>
-      <div className='w-full flex justify-center items-center h-[80vh] bg-gray-100'>
-        <div className='flex flex-col justify-center items-center space-y-4 w-[80%] md:w-[25%] p-6 md:p-12 bg-white rounded-lg shadow-md'>
+      <div className='w-full flex justify-center items-center h-[80vh] bg-gray-200'>
+        <div className='flex flex-col justify-center items-start space-y-4 w-[80%] md:w-[25%] p-6 md:p-12 bg-white rounded-lg shadow-md'>
           <h1 className='text-xl font-bold text-center'>
             Create an Account
           </h1>
