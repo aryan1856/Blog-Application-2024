@@ -8,7 +8,7 @@ module.exports = function(root){
              changeOrigin: true,
              secure: false,
              headers: {
-                'Accesss-Control-Allow-Origin': '*',
+                'Accesss-Control-Allow-Origin': 'http://localhost:3000',
 
              }
 
