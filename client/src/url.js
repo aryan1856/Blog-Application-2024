@@ -1,2 +1,2 @@
-export const URL ='http://localhost:8000';
-export const IF = 'http://localhost:8000/images/';
+export const URL ='https://blog-application-2024-backend.onrender.com';
+export const IF = 'https://blog-application-2024-backend.onrender.com/images/';

@@ -22,7 +22,7 @@ const PostDetails = () => {
 
   const fetchPost = async () => {
     try {
-      const res = await axios.get("/api/posts/" + PostID);
+      const res = await axios.get(URL + "/api/posts/" + PostID);
       setpost(res.data);
     } catch (err) {
       console.log(err);
@@ -31,7 +31,7 @@ const PostDetails = () => {
 
   const handleDeletePost = async () => {
     try {
-      const res = await axios.delete("/api/posts/" + PostID, { withCredentials: true });
+      const res = await axios.delete(URL + "/api/posts/" + PostID, { withCredentials: true });
       console.log(res.data);
       navigate("/");
     } catch (err) {

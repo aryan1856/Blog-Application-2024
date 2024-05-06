@@ -2,6 +2,7 @@ import React, { useContext, useState } from 'react'
 import { Link,useNavigate } from 'react-router-dom'
 import Footer from '../components/footer'
 import { UserContext } from '../context/UserContext'
+import { URL } from '../url'
 
 const Login = () => {
 
@@ -16,7 +17,7 @@ const Login = () => {
   
     const handleLogin = async() => {
       try{
-        const res = await fetch("/api/auth/login",{
+        const res = await fetch(URL + "/api/auth/login",{
          method: 'POST',
          headers:{
           'Content-Type':'application/json',
