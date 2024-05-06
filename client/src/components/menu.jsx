@@ -11,6 +11,7 @@ const handleLogout = async () => {
     try{
   await axios.get("/api/auth/logout",{withCredentials:true})
   setUser(null)
+  window.localStorage.removeItem("isLoggedIn")
   navigate("/login")
     }
     catch(err){
@@ -35,7 +36,7 @@ return (
 
 {
         user && <h3 className='text-white text-sm hover:text-gray-500 cursor-pointer '>
-            <Link to={'/profile/'}>Profile</Link>
+            <Link to={'/profile/' + user._id}>Profile</Link>
 
         </h3>
      }
@@ -43,7 +44,7 @@ return (
 
 {
         user && <h3 className='text-white text-sm hover:text-gray-500 cursor-pointer '>
-            <Link to={'/write/' + user._id}>Write</Link>
+            <Link to={'/write/'}>Write</Link>
 
         </h3>
      }

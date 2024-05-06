@@ -4,9 +4,9 @@ const postSchema = new mongoose.Schema({
     title : {
         type : String,
         required: true,
-        unique: true
+        unique: false
     },
-    description : {
+    desc : {
         type : String,
         required: true
     },
@@ -22,9 +22,9 @@ const postSchema = new mongoose.Schema({
         type : String,
         required: true
     },
-    category : {
+    category: {
         type : Array,
-        required: true
+        required : false
     }
 }, {timestamps:true})
 

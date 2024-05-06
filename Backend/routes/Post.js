@@ -9,6 +9,7 @@ const verifyToken = require('../verifyToken')
 //create
 router.post("/create", verifyToken, async(request, response) => {
     try {
+        console.log(request.body.category)
         const newPost = new post(request.body)
         const savedPost = await newPost.save()
         response.status(200).json(savedPost)
@@ -20,7 +21,7 @@ router.post("/create", verifyToken, async(request, response) => {
 //update
 router.put("/:id", verifyToken, async(request, response) => {
     try {
-        const updatedPost = await post.findByIdAndUpdate(request.params.id, {$set:requestBody},{new:true})
+        const updatedPost = await post.findByIdAndUpdate(request.params.id, {$set:request.body},{new:true})
         response.status(200).json(updatedPost)
     } catch (error) {
         response.status(500).json(error)
@@ -28,7 +29,7 @@ router.put("/:id", verifyToken, async(request, response) => {
 })
 
 //delete
-router.delete("/:id", async(request, response) => {
+router.delete("/:id", verifyToken, async(request, response) => {
     try {
         await post.findByIdAndDelete(request.params.id)
         await comment.deleteMany({postId:request.params.id})
@@ -41,28 +42,45 @@ router.delete("/:id", async(request, response) => {
 //get post details
 router.get("/:id", async(request, response) => {
     try {
-        const Post = await post.findByIdAnd(request.params.id)
+        const Post = await post.findById(request.params.id)
         response.status(200).json(Post)
     } catch (error) {
         response.status(500).json(error)
     }
 })
 
-router.get("/", async(request, response) => {
+router.get("/", async (request, response) => {
+    const { search, category } = request.query;
     try {
-        const searchFilter = {
-            title:{$regex:express.query.search, $options:"i"}
+        const searchConditions = {};
+        
+        if (search) {
+            searchConditions.title = { $regex: search, $options: "i" };
         }
-        const posts = await post.find(express.query.search ? searchFilter:null)
+        
+        if (category) {
+            searchConditions.category = category;
+        }
+        
+        const posts = await post.find(searchConditions);
+        response.status(200).json(posts);
+    } catch (error) {
+        response.status(500).json(error);
+    }
+});
+
+router.get("/user/:userId", async(request, response) => {
+    try {
+        const posts = await post.find({userId:request.params.userId})
         response.status(200).json(posts)
     } catch (error) {
         response.status(500).json(error)
     }
 })
 
-router.get("/user/:userId", async(request, response) => {
+router.get("/category/:category", async(request, response) => {
     try {
-        const posts = await post.find({userId:request.params.id})
+        const posts = await post.find({category:request.params.category})
         response.status(200).json(posts)
     } catch (error) {
         response.status(500).json(error)

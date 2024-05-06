@@ -3,7 +3,6 @@ const router = express.Router()
 const User = require('../models/users')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
-const { info } = require('sass')
 
 //For register
 router.post("/register", async(request, response) => {
@@ -31,18 +30,19 @@ router.post("/login", async(request, response) => {
         if(!user)
             return response.status(404).json("User not found")
         const match = await bcrypt.compare(request.body.password, user.password)
-        if(!match)
+        if(!match){
             return response.status(404).json("Wrong password")
+        }
         const token = jwt.sign({
-            _id, 
+            _id:user._id, 
             username:user.username,
-            email
+            email:user.email
         }, process.env.SECRET_KEY,{expiresIn: "3d"})
         const{password, ...info} = user._doc
         response.cookie("token", token, {
             httpOnly: true,
             secure: true,
-            sameSite: 'none'
+            sameSite: 'None'
         }).status(200).json(info)
     } catch (error) {
         response.status(500).json(error)
@@ -59,15 +59,16 @@ router.get("/logout", async(request, response) => {
 })
 
 
-//For refresh
-
-router.get("/refresh",(request, response) => {
-    const token = request.cookies.token
-    jwt.verify(token.process.env.SECRET_KEY,{},async(error, data) => {
-        if(error)
-            return response.status(404).json(error)
-        response.status(200).json(data)
+//REFETCH USER
+router.get("/refetch", (req,res)=>{
+    const token=req.cookies.token
+    jwt.verify(token,process.env.SECRET_KEY,{},async (err,data)=>{
+        if(err){
+            return res.status(404).json(err)
+        }
+        res.status(200).json(data)
     })
 })
+
 
 module.exports = router
