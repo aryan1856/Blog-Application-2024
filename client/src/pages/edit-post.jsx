@@ -85,7 +85,7 @@ const EditPost = () => {
 
     const addCategory = () => {
         if (cat && !cats.includes(cat)) {
-            setCats([...cats, cat]);
+            setCats([...cats, cat.toLowerCase()]);
             setCat("");
         }
     };
@@ -115,12 +115,24 @@ const EditPost = () => {
                         <div>
                             <select className='p-2 border rounded w-full' value={cat} onChange={(e) => setCat(e.target.value)}>
                                 <option value="">Select Category</option>
-                                {/* Options can be dynamically generated */}
+                                <option value="Artificial Intelligence">Artificial Intelligence</option>
+                                <option value="Nature">Nature</option>
+                                <option value="Information Technology">Information Technology</option>
+                                <option value="Business">Business</option>
+                                <option value="Life">Life</option>
+                                <option value="WeddingSeason">Wedding Season</option>
+                                <option value="PersonalCare">Personal Care</option>
+                                <option value="Travel">Travel</option>
+                                <option value="Food">Food</option>
+                                <option value="WorldTour">World Tour</option>
+                                <option value="Trip">Trip</option>
+                                <option value="HostelLife">Hostel Life</option>
+                                <option value="CollegeLife">College Life</option>
                             </select>
                             <button type="button" className='mt-2 bg-black hover:bg-gray-700 text-white p-2 w-full' onClick={addCategory}>Add Selected Category</button>
                         </div>
                         <div className='flex gap-2'>
-                            <input className='flex-grow p-2 border rounded' type="text" placeholder='Or enter a new category' value={customCat} onChange={e => setCustomCat(e.target.value)} />
+                            <input className='flex-grow p-2 border rounded' type="text" placeholder='Or enter a new category' value={customCat} onChange={e => setCustomCat(e.target.value.toLowerCase())} />
                             <button type="button" className='bg-black hover:bg-gray-700 text-white px-4 py-2' onClick={addCustomCategory}>Add Custom</button>
                         </div>
                         <div className='flex flex-wrap gap-2 mt-2'>

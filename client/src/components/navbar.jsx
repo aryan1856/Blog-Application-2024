@@ -25,7 +25,7 @@ function Navbar() {
             alert("Please enter a valid category.");
             return;
         }
-        navigate(`/posts/category/${category.trim()}`);
+        navigate(`/posts/category/${category.trim().toLowerCase()}`);
         setCategory("");
         setIsSearchVisible(false); // Optionally hide search after use
     };

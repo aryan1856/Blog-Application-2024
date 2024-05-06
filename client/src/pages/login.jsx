@@ -30,7 +30,7 @@ const Login = () => {
           const cookies = res.headers.get('Set-Cookie');
           console.warn('Data',data)
           console.warn('Cookies',cookies)
-
+          window.localStorage.setItem("isLoggedIn", true);
           setUser(data)
         }
         else {

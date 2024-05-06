@@ -40,6 +40,8 @@ const [email, setEmail] = useState(user?.email || "");
   
 
   const handleUserUpdate = async () => {
+    if(!window.confirm("Confirm updates!"))
+        return;
     setLoading(true);
     const updateData = {
       username,
@@ -60,6 +62,7 @@ const [email, setEmail] = useState(user?.email || "");
       setUpdated(true);
       setEditMode(false);
       setNewPassword("");
+
     } catch (err) {
       console.error(err);
       setError("Update failed");
@@ -71,6 +74,8 @@ const [email, setEmail] = useState(user?.email || "");
   
 
   const handleUserDelete = async () => {
+    if(!window.confirm("Are you sure to delete account?"))
+        return;
     try {
       await axios.delete(`${URL}/api/users/${user._id}`, {
         withCredentials: true,

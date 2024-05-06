@@ -82,62 +82,62 @@ const PostDetails = () => {
   };
 
   return (
-    <div>
-      <Navbar />
-      {loader ? (
-        <div className='h-[80vh] flex justify-center items-center w-full'>
-          <Loader />
-        </div>
-      ) : (
-        <div className='px-8 md:px-[200px] mt-8'>
-          <div className='border p-3 shadow'>
-            <div className='flex justify-between items-center'>
-            <h1 className="text-3xl font-bold text-black md:text-3xl">{post.title}</h1>
-              {user?._id === post?.userId && (
-                <div className='flex items-center justify-center space-x-2 '>
-                  <p className='cursor-pointer ' onClick={() => navigate("/edit/" + PostID)}>
-                    <BiEdit />
-                  </p>
-                  <p className='cursor-pointer ' onClick={confirmDelete}>
-                    <MdDelete />
-                  </p>
-                </div>
-              )}
+    <div class="bg-gray-50 min-h-screen">
+  <Navbar />
+  {loader ? (
+    <div className='h-[80vh] flex justify-center items-center w-full'>
+      <Loader />
+    </div>
+  ) : (
+    <div className='px-8 md:px-32 lg:px-48 xl:px-64 mt-8'>
+      <div className='bg-white border border-gray-200 p-4 shadow-lg rounded-md'>
+        <div className='flex justify-between items-center mb-4'>
+          <h1 className="text-3xl font-bold text-gray-800">{post.title}</h1>
+          {user?._id === post?.userId && (
+            <div className='flex items-center space-x-4'>
+              <p className='cursor-pointer text-blue-500 hover:text-blue-700' onClick={() => navigate("/edit/" + PostID)}>
+                <BiEdit />
+              </p>
+              <p className='cursor-pointer text-red-500 hover:text-red-700' onClick={confirmDelete}>
+                <MdDelete />
+              </p>
             </div>
-            <div className='w-[100%] flex flex-col'>
-              <img src={IF + post.photo} className='object-cover h-[45vh] mx-auto mt-8' alt='' />
-              <p className='text-justify mt-4 px-2 md:px-4 lg:px-8 w-full border p-3 shadow-sm'>{post.desc}</p>
-              <div className='flex justify-center items-center mt-8 space-x-4 font-semibold'>
-                <p>Categories: </p>
-                <div className='flex justify-center items-center space-x-2'>
-                  {post.category?.map((c, i) => (
-                    <div key={i} className='bg-gray-300 rounded-xl px-3 py-1'>
-                      {c}
-                    </div>
-                  ))}
+          )}
+        </div>
+        <div>
+          <img src={IF + post.photo} className='object-cover h-[45vh] mx-auto mt-4 shadow-md rounded' alt='' />
+          <p className='text-justify mt-4 px-4 py-2 bg-gray-100 border border-gray-200 shadow-sm rounded-lg'>{post.desc}</p>
+          <div className='flex justify-center items-center mt-8 space-x-2 font-semibold'>
+            <p>Categories:</p>
+            <div className='flex flex-wrap items-center gap-2'>
+              {post.category?.map((c, i) => (
+                <div key={i} className='bg-gray-200 rounded-full px-3 py-1 text-xs sm:text-sm md:text-base'>
+                  {c}
                 </div>
-              </div>
-              <div className='flex justify-center items-center p-3 flex-col mt-4'></div>
-              <h3 className='items-center mt-8 space-x-4 font-semibold'>
-                Comments:
-              </h3>
-              {comments?.map((c) => (
-                <Comment className='' key={c._id} c={c} post={post} />
               ))}
-              <div className='border flex justify-center flex-col mt-4 md:flex-row'>
-                <input onChange={(e) => setComment(e.target.value)} type='text'
-                  placeholder='Write your comment'
-                  className='md:w-[80%] outline-none py-2 px-4 mt-4 md:mt-0' />
-                <button onClick={postComment} className='bg-black text-xm text-white font-semibold px-2 py-2 md:w-[50%] mt-4 md:mt-0'>
-                  Add Comment
-                </button>
-              </div>
             </div>
           </div>
+          <h3 className='mt-12 mb-4 font-semibold text-center'>
+            Comments:
+          </h3>
+          {comments?.map((c) => (
+            <Comment key={c._id} c={c} post={post} />
+          ))}
+          <div className='flex flex-col md:flex-row items-center justify-center gap-4 mt-4 p-4 shadow rounded-md bg-white'>
+            <input onChange={(e) => setComment(e.target.value)} type='text'
+              placeholder='Write your comment'
+              className='md:w-[80%] outline-none py-2 px-4' />
+            <button onClick={postComment} className='bg-black hover:bg-blue-700 text-white font-semibold px-4 py-2 w-full md:w-auto'>
+              Add Comment
+            </button>
+          </div>
         </div>
-      )}
-      <Footer />
+      </div>
     </div>
+  )}
+  <Footer />
+</div>
+
   );
 };
 

@@ -11,6 +11,7 @@ const handleLogout = async () => {
     try{
   await axios.get("/api/auth/logout",{withCredentials:true})
   setUser(null)
+  window.localStorage.removeItem("isLoggedIn")
   navigate("/login")
     }
     catch(err){

@@ -2,31 +2,37 @@ import axios from "axios";
 import { createContext, useEffect, useState } from "react";
 import { URL } from "../url";
 
+export const UserContext = createContext({});
 
-export const UserContext=createContext({})
+export function UserContextProvider({ children }) {
+    const [user, setUser] = useState(null);
+    const [isCheckingUser, setIsCheckingUser] = useState(true);
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
 
+    useEffect(() => {
+        getUser();
+    }, []);
 
-export function UserContextProvider({children}){
-    const [user,setUser]=useState(null)
+    const getUser = async () => {
+        try {
+            const res = await axios.get(`${URL}/api/auth/refetch`, { withCredentials: true });
+            setUser(res.data);
+            setIsCheckingUser(false);
+        } catch (err) {
+            console.error("Failed to fetch user:", err);
+            setUser(null);
+            setIsCheckingUser(false);
+        }
+    };
 
-    useEffect(()=>{
-      getUser()
+    useEffect(() => {
+        const loggedStatus = window.localStorage.getItem('isLoggedIn') === 'true';
+        setIsLoggedIn(loggedStatus);
+      }, []);
 
-    },[])
-
-    const getUser=async()=>{
-      try{
-        const res=await axios.get(URL+"/api/auth/refetch",{withCredentials:true})
-        // console.log(res.data)
-        setUser(res.data)
-
-      }
-      catch(err){
-        console.log(err)
-      }
-    }
-    
-    return (<UserContext.Provider value={{user,setUser}}>
-      {children}
-    </UserContext.Provider>)
-    }
+    return (
+        <UserContext.Provider value={{ user, setUser, isLoggedIn, isCheckingUser }}>
+            {children}
+        </UserContext.Provider>
+    );
+}
