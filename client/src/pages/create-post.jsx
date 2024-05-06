@@ -5,6 +5,7 @@ import { useContext, useState } from 'react';
 import { UserContext } from '../context/UserContext';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { URL } from '../url';
 
 const CreatePost = () => {
     const [title, setTitle] = useState("");
@@ -53,14 +54,14 @@ const CreatePost = () => {
             data.append("file", file);
             post.photo = filename;
             try {
-                await axios.post("/api/upload", data);
+                await axios.post(URL + "/api/upload", data);
             } catch (err) {
                 console.error(err);
             }
         }
 
         try {
-            const res = await axios.post("/api/posts/create", post, { withCredentials: true });
+            const res = await axios.post(URL + "/api/posts/create", post, { withCredentials: true });
             navigate("/posts/post/" + res.data._id);
         } catch (err) {
             console.error(err);

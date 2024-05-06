@@ -4,11 +4,11 @@ module.exports = function(root){
     root.use(
         '/api',
         createProxyMiddleware({
-             target: 'http://localhost:8000',
+             target: 'https://blog-application-2024-backend.onrender.com',
              changeOrigin: true,
              secure: false,
              headers: {
-                'Accesss-Control-Allow-Origin': 'http://localhost:3000',
+                'Accesss-Control-Allow-Origin': '*',
 
              }
 

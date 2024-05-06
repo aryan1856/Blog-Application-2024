@@ -5,6 +5,7 @@ import { useContext, useState, useEffect } from 'react';
 import { UserContext } from '../context/UserContext';
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
+import { URL } from '../url';
 
 const EditPost = () => {
     const { id } = useParams();
@@ -20,7 +21,7 @@ const EditPost = () => {
 
     const fetchPost = async () => {
         try {
-            const res = await axios.get(`/api/posts/${id}`);
+            const res = await axios.get(URL + `/api/posts/${id}`);
             setPostData(res.data);
             setTitle(res.data.title);
             setDesc(res.data.desc);
@@ -52,14 +53,14 @@ const EditPost = () => {
             data.append("file", file);
             post.photo = filename;  // Update to new photo filename if file is uploaded
             try {
-                await axios.post("/api/upload", data);
+                await axios.post(URL + "/api/upload", data);
             } catch (err) {
                 console.error(err);
             }
         }
 
         try {
-            await axios.put(`/api/posts/${id}`, post, { withCredentials: true });
+            await axios.put(URL + `/api/posts/${id}`, post, { withCredentials: true });
             navigate(`/posts/post/${id}`);
         } catch (err) {
             console.error(err);
