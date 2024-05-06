@@ -10,10 +10,11 @@ const authRoute = require('./routes/auth')
 const userRoute = require('./routes/User')
 const postRoute = require('./routes/Post')
 const commentRoute = require('./routes/Comment')
+const FRONTED_URL = process.env.FRONTEND_URL;
 
 // app.use(cors())
 const corsOptions ={
-    origin:'http://localhost:3000', 
+    origin:FRONTED_URL, 
     credentials:true,            //access-control-allow-credentials:true
     optionSuccessStatus:200
 }
